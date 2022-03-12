@@ -5,6 +5,7 @@ import java.util.Arrays;
 import javax.annotation.PostConstruct;
 
 import com.devsuperior.dsposts.entities.User;
+import com.devsuperior.dsposts.repositories.PostRepository;
 import com.devsuperior.dsposts.repositories.UserRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,10 +19,14 @@ public class TestConfig {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private PostRepository postRepository;
+
     @PostConstruct
     public void init() {
 
         userRepository.deleteAll();
+        postRepository.deleteAll();
 
         User sushi = new User(null, "Sushi Sousa", "sushi@gmail.com");
         User thor = new User(null, "Thor Sousa", "thor@gmail.com");
