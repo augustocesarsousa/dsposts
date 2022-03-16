@@ -42,6 +42,11 @@ public class UserService {
         return new UserDTO(user);
     }
 
+    public void delete(String id) {
+        getEntityById(id);
+        repository.deleteById(id);
+    }
+
     private User getEntityById(String id) {
         Optional<User> user = repository.findById(id);
         return user.orElseThrow(() -> new ResourceNotFoundException("Usuário não encontrado"));
