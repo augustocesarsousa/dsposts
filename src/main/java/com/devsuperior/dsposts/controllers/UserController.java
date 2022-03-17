@@ -3,6 +3,7 @@ package com.devsuperior.dsposts.controllers;
 import java.net.URI;
 import java.util.List;
 
+import com.devsuperior.dsposts.dto.PostDTO;
 import com.devsuperior.dsposts.dto.UserDTO;
 import com.devsuperior.dsposts.services.UserService;
 
@@ -35,6 +36,12 @@ public class UserController {
     public ResponseEntity<UserDTO> findById(@PathVariable String id) {
         UserDTO userDTO = service.findById(id);
         return ResponseEntity.ok(userDTO);
+    }
+
+    @GetMapping(value = "/{id}/posts")
+    public ResponseEntity<List<PostDTO>> getUserPosts(@PathVariable String id) {
+        List<PostDTO> usersDTO = service.getUserPosts(id);
+        return ResponseEntity.ok(usersDTO);
     }
 
     @PostMapping
