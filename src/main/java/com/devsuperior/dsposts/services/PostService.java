@@ -1,6 +1,8 @@
 package com.devsuperior.dsposts.services;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import com.devsuperior.dsposts.dto.PostDTO;
 import com.devsuperior.dsposts.entities.Post;
@@ -19,6 +21,11 @@ public class PostService {
     public PostDTO findById(String id) {
         Post post = getPostById(id);
         return new PostDTO(post);
+    }
+
+    public List<PostDTO> findByTitle(String text) {
+        List<Post> posts = repository.findByTitleContainingIgnoreCase(text);
+        return posts.stream().map(x -> new PostDTO(x)).collect(Collectors.toList());
     }
 
     private Post getPostById(String id) {

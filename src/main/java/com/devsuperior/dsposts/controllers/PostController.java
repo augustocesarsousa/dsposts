@@ -1,5 +1,7 @@
 package com.devsuperior.dsposts.controllers;
 
+import java.util.List;
+
 import com.devsuperior.dsposts.dto.PostDTO;
 import com.devsuperior.dsposts.services.PostService;
 
@@ -8,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -21,5 +24,11 @@ public class PostController {
     public ResponseEntity<PostDTO> findById(@PathVariable String id) {
         PostDTO postDTO = service.findById(id);
         return ResponseEntity.ok(postDTO);
+    }
+
+    @GetMapping(value = "/titlesearch")
+    public ResponseEntity<List<PostDTO>> findByTitle(@RequestParam(value = "text", defaultValue = "") String text) {
+        List<PostDTO> postsDTO = service.findByTitle(text);
+        return ResponseEntity.ok(postsDTO);
     }
 }
