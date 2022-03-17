@@ -1,5 +1,7 @@
 package com.devsuperior.dsposts.services;
 
+import java.time.Instant;
+import java.time.format.DateTimeParseException;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -28,8 +30,25 @@ public class PostService {
         return posts.stream().map(x -> new PostDTO(x)).collect(Collectors.toList());
     }
 
+    public List<PostDTO> fullSearch(String text, String start, String end) {
+        Instant startMoment = convertMoment(start, Instant.ofEpochMilli(0L));
+        Instant endMoment = convertMoment(end, Instant.ofEpochMilli(0L));
+
+        List<Post> posts = repository.fullSearch(text, startMoment, endMoment);
+        return posts.stream().map(x -> new PostDTO(x)).collect(Collectors.toList());
+    }
+
     private Post getPostById(String id) {
         Optional<Post> post = repository.findById(id);
         return post.orElseThrow(() -> new ResourceNotFoundException("Post not found"));
+    }
+
+    private Instant convertMoment(String originalString, Instant alternative) {
+        try {
+            return Instant.parse(originalString);
+        } catch (DateTimeParseException e) {
+            return alternative;
+        }
+
     }
 }
