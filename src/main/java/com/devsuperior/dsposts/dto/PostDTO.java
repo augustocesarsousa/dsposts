@@ -16,7 +16,7 @@ public class PostDTO {
 
     private Author author;
 
-    private List<Comment> comments = new ArrayList();
+    private List<Comment> comments = new ArrayList<>();
 
     public PostDTO() {
 
